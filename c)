@@ -1,0 +1,29 @@
+#Генератор-функція визначників
+def determinant_generator(a, b):
+    D_prev2 = 1                     # D_0
+    yield D_prev2
+    D_prev1 = a + b                 # D_1
+    yield D_prev1
+    n = 2
+    while True:
+        D_curr = (a + b) * D_prev1 - a * b * D_prev2
+        yield D_curr
+        D_prev2, D_prev1 = D_prev1, D_curr
+        n += 1
+
+# Обчислення Dn через цикл
+def compute_determinant(n, a, b):
+    gen = determinant_generator(a, b)
+    result = None
+    for _ in range(n + 1):
+        result = next(gen)
+    return result
+
+# Головна програма
+if __name__ == "__main__":
+    n = int(input("Введіть порядок матриці n: "))
+    a = float(input("Введіть значення a: "))
+    b = float(input("Введіть значення b: "))
+    
+    result = compute_determinant(n, a, b)
+    print(f"Визначник матриці порядку {n} дорівнює: {result}")
