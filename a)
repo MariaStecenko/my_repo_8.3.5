@@ -1,5 +1,5 @@
 import math
-
+#Генератор-функція
 def sequence_generator(x):
     k = 0
     current = 1  # x_0 = x^0 / 0! = 1
@@ -9,12 +9,14 @@ def sequence_generator(x):
         current *= (x ** 2) / ((2 * k - 1) * (2 * k))
         yield current
 
+# Обчислення конкретного члена через цикл
 def compute_element(x, k):
     gen = sequence_generator(x)
     for _ in range(k):
         next(gen)
     return next(gen)
 
+#Демонстрація роботи
 if __name__ == "__main__":
     x = float(input("Введіть значення x: "))
     k = int(input("Введіть номер члена послідовності k: "))
