@@ -1,0 +1,23 @@
+#Генератор-функція для добутку
+def product_generator():
+    k = 1
+    current_product = 1.0
+    yield current_product
+    while True:
+        current_product *= (1 + 1 / (k ** 2))
+        yield current_product
+        k += 1
+
+#Обчислення Pn через цикл з лічильником
+def compute_product(n):
+    gen = product_generator()
+    result = None
+    for _ in range(n + 1):
+        result = next(gen)
+    return result
+
+#Головна програма
+if __name__ == "__main__":
+    n = int(input("Введіть значення n: "))
+    result = compute_product(n)
+    print(f"P_{n} = {result}")
