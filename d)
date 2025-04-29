@@ -1,0 +1,29 @@
+#Генератор-функція послідовності ak
+def sequence_a_generator():
+    a = [1, 1, 1]  # a_1, a_2, a_3
+    for val in a:
+        yield val
+    k = 4
+    while True:
+        next_val = a[-1] + a[-3]
+        a.append(next_val)
+        yield next_val
+        k += 1
+
+
+#Функція для обчислення суми Sn
+def compute_sum(n):
+    gen = sequence_a_generator()
+    total_sum = 0.0
+    for k in range(1, n + 1):
+        a_k = next(gen)
+        total_sum += a_k / (2 ** k)
+    return total_sum
+
+#Головна програма
+if __name__ == "__main__":
+    n = int(input("Введіть значення n: "))
+    result = compute_sum(n)
+    print(f"S_{n} = {result}")
+
+
