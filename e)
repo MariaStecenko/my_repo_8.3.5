@@ -1,0 +1,37 @@
+#Генератор-функція для tk
+def taylor_term_generator(x):
+    k = 0
+    term = x  # t_0
+    yield term
+    while True:
+        k += 1
+        term *= x * x * (2 * k - 1) / (2 * k + 1)
+        yield term
+
+
+#Функція для обчислення з точністю епсілон
+def compute_ln_series(x, epsilon=1e-6):
+    gen = taylor_term_generator(x)
+    total_sum = 0.0
+    term = next(gen)
+    while abs(term) >= epsilon:
+        total_sum += term
+        term = next(gen)
+    return 2 * total_sum
+
+
+#Порівняння з math.log
+import math
+
+if __name__ == "__main__":
+    x = float(input("Введіть значення x (|x| < 1): "))
+    eps = float(input("Введіть точність ε: "))
+
+    if abs(x) >= 1:
+        print("Помилка: значення x повинне бути в межах (-1, 1)")
+    else:
+        approx = compute_ln_series(x, eps)
+        exact = math.log((1 + x) / (1 - x))
+        print(f"Апроксимація: {approx}")
+        print(f"Точне значення з math: {exact}")
+        print(f"Абсолютна похибка: {abs(approx - exact)}")
